@@ -26,25 +26,14 @@ public class ApiTagController {
     }
 
     @GetMapping("api/auth/tags/{id}")
-    public ResponseEntity<Tag> getTagById(@PathVariable Long id){
+    public ResponseEntity <Optional<Tag>> getTagById(@PathVariable Long id){
         Optional<Tag> tag = tagService.findById(id);
 
         if (tag == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("api/auth/tags/{name}")
-    public ResponseEntity<Tag> getTagByName(@PathVariable String name){
-        Optional<Tag> tag = tagService.findByName(name);
-
-        if (tag == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(tag,HttpStatus.OK);
     }
 
     @PostMapping("api/auth/tags")
