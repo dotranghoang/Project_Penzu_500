@@ -1,31 +1,24 @@
 package com.codegym.penzuproject.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
-import java.util.Date;
-
-@Entity
-@Table(name = "diary")
-public class Diary {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class DiaryForm {
     private Long id;
     private String title;
     private String author;
-    private String description;
+    private String desciption;
     private String content;
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private Date date;
-    private String file;
+    private String date;
+    private MultipartFile file;
 
-    public Diary() {
+    public DiaryForm() {
     }
 
-    public Diary(String title, String author, String description, String content, Date date, String file) {
+    public DiaryForm(Long id, String title, String author, String desciption, String content, String date, MultipartFile file) {
+        this.id = id;
         this.title = title;
         this.author = author;
-        this.description = description;
+        this.desciption = desciption;
         this.content = content;
         this.date = date;
         this.file = file;
@@ -55,12 +48,12 @@ public class Diary {
         this.author = author;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesciption() {
+        return desciption;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesciption(String desciption) {
+        this.desciption = desciption;
     }
 
     public String getContent() {
@@ -71,19 +64,19 @@ public class Diary {
         this.content = content;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public String getFile() {
+    public MultipartFile getFile() {
         return file;
     }
 
-    public void setFile(String file) {
+    public void setFile(MultipartFile file) {
         this.file = file;
     }
 }
