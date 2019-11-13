@@ -3,11 +3,11 @@ package com.codegym.penzuproject.controller;
 import com.codegym.penzuproject.model.Diary;
 import com.codegym.penzuproject.service.IDiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +18,14 @@ public class DiaryRestAPIs {
     @Autowired
     private IDiaryService diaryService;
 
+    @Autowired
+    Environment env;
+
     @PostMapping("/diaries")
     public ResponseEntity<Diary> createDiary(@RequestBody Diary diary){
+       if (diary == null){
+           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+       }
        diaryService.save(diary);
        return new ResponseEntity<>(diary, HttpStatus.CREATED);
     }
@@ -34,15 +40,14 @@ public class DiaryRestAPIs {
         return new ResponseEntity<>(diaries, HttpStatus.CREATED);
     }
 
-//    @GetMapping("/diaries/{id}")
-//    public ResponseEntity<Diary> getDiaryById(@PathVariable Long id){
-//        Optional<Diary> diary = diaryService.findById(id);
-//        if (diary == null){
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }else {
-//
-//        }
-//    }
+    @GetMapping("/diaries/{id}")
+    public ResponseEntity<Optional<Diary>> getDiaryById(@PathVariable Long id){
+        Optional<Diary> diary = diaryService.findById(id);
+        if (diary == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(diary, HttpStatus.OK);
+    }
 
     @PutMapping("/diaries")
     public ResponseEntity<Diary> updateDiary(@RequestParam String title, @RequestBody Diary diary){

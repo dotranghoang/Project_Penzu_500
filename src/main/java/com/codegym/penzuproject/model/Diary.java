@@ -19,16 +19,26 @@ public class Diary {
     private Date date;
     private String file;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
+
     public Diary() {
     }
 
-    public Diary(String title, String author, String description, String content, Date date, String file) {
+    public Diary(String title, String author, String description, String content, Date date, String file, User user, Tag tag) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.content = content;
         this.date = date;
         this.file = file;
+        this.user = user;
+        this.tag = tag;
     }
 
     public Long getId() {
@@ -85,5 +95,21 @@ public class Diary {
 
     public void setFile(String file) {
         this.file = file;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 }

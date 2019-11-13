@@ -2,6 +2,7 @@ package com.codegym.penzuproject.model;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tag")
@@ -12,6 +13,8 @@ public class Tag {
     private Long id;
 
     private String name;
+    @OneToMany(targetEntity = Diary.class, mappedBy = "tag")
+    private List<Diary> diaries;
 
     public Tag() {
     }
