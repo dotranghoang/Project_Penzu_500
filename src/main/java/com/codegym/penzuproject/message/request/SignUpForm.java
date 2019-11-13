@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class SignUpForm {
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 50)
@@ -64,5 +65,13 @@ public class SignUpForm {
 
     public void setRole(Set<String> role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
