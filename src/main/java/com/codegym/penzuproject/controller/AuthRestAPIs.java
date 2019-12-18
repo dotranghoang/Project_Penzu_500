@@ -141,14 +141,15 @@ public class AuthRestAPIs {
         try {
                 Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(passForm.getUsername(), passForm.getCurrentPassword()));
+                if (authentication.isAuthenticated()) {
+                    user.get().setPassword(passwordEncoder.encode(passForm.getNewPassword()));
 
-        user.get().setPassword(passwordEncoder.encode(passForm.getNewPassword()));
-
-        userService.save(user.get());
-
-        return new ResponseEntity<>(new ResponseMessage("Change password successful"),HttpStatus.OK);
+                    userService.save(user.get());
+                    return new ResponseEntity<>(new ResponseMessage("Change password successful"),HttpStatus.OK);
+                }
+                throw new RuntimeException("Fail Authentication");
         } catch (Exception e) {
-            throw new RuntimeException("Fail!");
+            throw new RuntimeException("Error =>" + e);
         }
     }
 }
